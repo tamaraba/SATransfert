@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Compte index{% endblock %}
+
+{% block body %}
+    <h1>Compte index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NomComplet</th>
+                <th>NumCompte</th>
+                <th>CodeBank</th>
+                <th>CodeIban</th>
+                <th>Adresse</th>
+                <th>Montant</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for compte in comptes %}
+            <tr>
+                <td>{{ compte.id }}</td>
+                <td>{{ compte.nomComplet }}</td>
+                <td>{{ compte.NumCompte }}</td>
+                <td>{{ compte.codeBank }}</td>
+                <td>{{ compte.codeIban }}</td>
+                <td>{{ compte.Adresse }}</td>
+                <td>{{ compte.montant }}</td>
+                <td>
+                    <a href="{{ path('compte_show', {'id': compte.id}) }}">show</a>
+                    <a href="{{ path('compte_edit', {'id': compte.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('compte_new') }}">Create new</a>
+{% endblock %}
