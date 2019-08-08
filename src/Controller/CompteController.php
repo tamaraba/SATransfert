@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/compte")
+ * @Route("/api/compte")
  */
 class CompteController extends AbstractController
 {
@@ -33,19 +33,18 @@ class CompteController extends AbstractController
         $compte = new Compte();
         $form = $this->createForm(CompteType::class, $compte);
         $form->handleRequest($request);
+        $data=json_decode($request->getContent(),true);
+        $form->submit($data);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+            $compte ->setNumCompte(date("Y").date("m").date("d").date("H").date("i").date("s"));
+            $compte ->setMontant(0);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($compte);
             $entityManager->flush();
 
-            return $this->redirectToRoute('compte_index');
-        }
+            return new Response('le compte a été bien ajouté', Response::HTTP_CREATED);
 
-        return $this->render('compte/new.html.twig', [
-            'compte' => $compte,
-            'form' => $form->createView(),
-        ]);
+
     }
 
     /**

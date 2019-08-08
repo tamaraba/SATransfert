@@ -37,7 +37,7 @@ class PartenaireController extends AbstractController
         $form->handleRequest($request);
         $data=json_decode($request->getContent(),true);
         $form->submit($data);
-        //var_dump($partenaire);
+        
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($partenaire);
             $entityManager->flush();
@@ -58,7 +58,7 @@ class PartenaireController extends AbstractController
         $user ->setAdresse($partenaire->getAdresse());
         $user ->setStatut("Actif");
         $entityManager->persist($user);
-            $entityManager->flush();
+        $entityManager->flush();
 
             return new Response('le partenaire a été bien ajouté', Response::HTTP_CREATED);
     }
