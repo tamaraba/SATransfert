@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Compte;
 use App\Entity\Partenaire;
 use App\Form\PartenaireType;
 use App\Repository\PartenaireRepository;
@@ -60,8 +61,16 @@ class PartenaireController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
+        $compte = new Compte();
+        $compte ->setNumCompte(date("Y").date("m").date("d").date("H").date("i").date("s"));
+        $compte ->setMontant(0);
+        $compte ->setPartenaire($partenaire);
+        $entityManager->persist($compte);
+        $entityManager->flush();
+
             return new Response('le partenaire a été bien ajouté', Response::HTTP_CREATED);
     }
+
 
     /**
      * @Route("/{id}", name="partenaire_show", methods={"GET"})
